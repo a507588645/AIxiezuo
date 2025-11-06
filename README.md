@@ -15,13 +15,51 @@
 
 ## 安装使用
 
-### 1. 安装依赖
+### 方式一：Docker部署（推荐）
+
+**使用Docker Compose（最简单）：**
+
+1. 复制环境变量示例文件：
+```bash
+cp .env.example .env
+```
+
+2. 编辑 `.env` 文件，填入你的API密钥
+
+3. 启动服务：
+```bash
+docker-compose up -d
+```
+
+4. 访问 http://localhost:5001
+
+**使用Docker镜像：**
+
+从GitHub Container Registry拉取镜像：
+```bash
+docker pull ghcr.io/a507588645/aixiezuo:latest
+```
+
+运行容器：
+```bash
+docker run -d \
+  -p 5001:5001 \
+  -e DEEPSEEK_API_KEY=your_key \
+  -e OPENAI_API_KEY=your_key \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/xiaoshuo:/app/xiaoshuo \
+  ghcr.io/a507588645/aixiezuo:latest
+```
+
+### 方式二：本地安装
+
+**1. 安装依赖**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 配置API密钥
+**2. 配置API密钥**
 
 编辑 `.env` 文件：
 
@@ -36,13 +74,13 @@ DSF_API_KEY="第三方api秘钥"
 DSF_API_URL="第三方api链接"
 ```
 
-### 3. 启动方式
+**3. 启动方式**
 
 **Web界面（推荐）：**
 ```bash
 python start_web.py
 ```
-访问 http://127.0.0.1:5001  推荐
+访问 http://127.0.0.1:5001
 
 **命令行使用：** 使用麻烦，不推荐
 ```python
@@ -176,6 +214,55 @@ new_state = generator.update_state(
 - **Anthropic**: anthropic_claude
 - **Google**: google_gemini
 - **其他**: dsf (第三方接口)
+
+## Docker部署
+
+### 构建Docker镜像
+
+```bash
+docker build -t aixiezuo:latest .
+```
+
+### 使用Docker Compose
+
+```bash
+# 启动服务
+docker-compose up -d
+
+# 查看日志
+docker-compose logs -f
+
+# 停止服务
+docker-compose down
+```
+
+### 数据持久化
+
+Docker部署会自动挂载以下目录：
+- `./data` - 章节状态和世界设定
+- `./xiaoshuo` - 生成的小说内容
+- `./versions` - 多版本内容
+- `./templates` - 提示词模板
+
+### GitHub Actions自动构建
+
+本项目配置了GitHub Actions工作流，可以手动触发构建并发布Docker镜像到GitHub Container Registry (ghcr.io)。
+
+**触发构建：**
+1. 进入GitHub仓库的 Actions 页面
+2. 选择 "Build and Push Docker Image" 工作流
+3. 点击 "Run workflow"
+4. 输入版本号（如 1.0.0）
+5. 选择是否同时标记为 latest
+
+**使用发布的镜像：**
+```bash
+# 拉取最新版本
+docker pull ghcr.io/a507588645/aixiezuo:latest
+
+# 拉取指定版本
+docker pull ghcr.io/a507588645/aixiezuo:1.0.0
+```
 
 ## 许可证
 

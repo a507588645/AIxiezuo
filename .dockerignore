@@ -1,0 +1,49 @@
+# Git files
+.git
+.gitignore
+.github
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data directories (will be mounted as volumes)
+data/
+xiaoshuo/
+versions/
+
+# Environment files (secrets should not be in image)
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Documentation
+*.md
+!README.md
+微信赞赏.png
+支付宝赞赏.png
+使用说明.txt
+DEV_DOC.md
+TEMPLATE_GUIDE.md
+WEB_USAGE.md
