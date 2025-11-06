@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* 确保所有元素在移动设备上具有平滑的滚动 */
+    /* 优化移动设备上的点击高亮效果 */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -42,7 +42,8 @@ header h1 {
     text-align: center;
     color: #4a5568;
     margin-bottom: 20px;
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    /* 响应式字体：最小1.5rem，理想值5vw，最大2.5rem */
+    font-size: clamp(1.5rem, 4vw + 0.5rem, 2.5rem);
     font-weight: 700;
 }
 
@@ -455,7 +456,8 @@ input[type="number"],
 select,
 textarea {
     transition: all 0.3s ease;
-    /* 防止iOS设备缩放 */
+    /* 防止iOS设备缩放：设置最小16px字体是移动端最佳实践 */
+    /* 当用户点击表单元素时，小于16px的字体会触发iOS自动缩放 */
     font-size: 16px;
 }
 
