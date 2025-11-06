@@ -48,6 +48,7 @@ jobs:
             type=raw,value=latest,enable=${{ inputs.push_latest }}
 
       - name: Build and push Docker image
+        id: build-and-push
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -59,4 +60,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
       - name: Image digest
-        run: echo "Image pushed with digest ${{ steps.build-and-push.outputs.digest }}"
+        run: echo "Image pushed with tags ${{ steps.meta.outputs.tags }}"
