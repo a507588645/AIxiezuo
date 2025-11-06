@@ -685,7 +685,7 @@ textarea:focus {
 
     .tab-btn {
         padding: 12px 16px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .single-generate,
@@ -706,7 +706,7 @@ textarea:focus {
     .btn-secondary,
     .btn-danger {
         padding: 12px 20px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .qr-item img {
@@ -729,7 +729,8 @@ textarea:focus {
     .template-editor textarea,
     .settings-editor textarea {
         min-height: 150px;
-        font-size: 14px;
+        /* 保持16px字体防止iOS缩放 */
+        font-size: 16px;
     }
 
     /* 优化按钮组 */
