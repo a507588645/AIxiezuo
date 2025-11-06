@@ -1,6 +1,9 @@
 #!/bin/bash
 # Docker Deployment Validation Script
 # This script validates the Docker setup for the AI Novel Generation System
+#
+# Usage: ./validate-docker.sh
+# Note: If you get "Permission denied", run: chmod +x validate-docker.sh
 
 set -e
 
@@ -55,8 +58,7 @@ if [ -f "docker-compose.yml" ]; then
     echo "✓ docker-compose.yml exists"
     # Validate YAML syntax
     if command -v python3 &> /dev/null; then
-        python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml'))" 2>&1
-        if [ $? -eq 0 ]; then
+        if python3 -c "import yaml; yaml.safe_load(open('docker-compose.yml'))" 2>&1; then
             echo "✓ docker-compose.yml syntax is valid"
         else
             echo "✗ docker-compose.yml has syntax errors"
@@ -93,8 +95,7 @@ if [ -f ".github/workflows/docker-publish.yml" ]; then
     echo "✓ GitHub Actions workflow exists"
     # Validate YAML syntax
     if command -v python3 &> /dev/null; then
-        python3 -c "import yaml; yaml.safe_load(open('.github/workflows/docker-publish.yml'))" 2>&1
-        if [ $? -eq 0 ]; then
+        if python3 -c "import yaml; yaml.safe_load(open('.github/workflows/docker-publish.yml'))" 2>&1; then
             echo "✓ Workflow YAML syntax is valid"
         else
             echo "✗ Workflow YAML has syntax errors"
