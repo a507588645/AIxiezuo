@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  aixiezuo:
+    build: .
+    container_name: aixiezuo
+    ports:
+      - "5001:5001"
+    environment:
+      # API Keys - set these in your .env file or here
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - DSF5_API_MODEL=${DSF5_API_MODEL}
+      - DSF5_API_KEY=${DSF5_API_KEY}
+      - DSF5_API_URL=${DSF5_API_URL}
+    volumes:
+      # Persist data directories
+      - ./data:/app/data
+      - ./xiaoshuo:/app/xiaoshuo
+      - ./versions:/app/versions
+      - ./templates:/app/templates
+      # Optional: mount .env file if you want to use it
+      # - ./.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
